@@ -1,0 +1,39 @@
+<div class="logo-container">
+  <img src="assets\logo.jpg" alt="Logo">
+</div>
+<div style="clear: both;"></div>
+<div class="container" *ngIf="!showOtpVerification">
+  <h1 style="font-size: 40px; margin-left: 65px;">Login</h1>
+  <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+    <label for="phone" style="margin-top: 50px; margin-bottom: 50px; font-weight: bold;font-size: 22px; ">Phone
+      Verification</label>
+    <div class="input-container">
+      <input type="tel" id="phone" name="phone" placeholder="Enter phone number" ngModel required>
+    </div>
+    <button type="submit" class="bold-button"
+      style="margin-top: 10px; border: none; background-color: transparent;font-size: 20px;">Get OTP</button>
+  </form>
+</div>
+<div *ngIf="showOtpVerification">
+  <div class="otp-heading">
+    <label for="otp" style="margin-left: 65px; font-weight: bold;font-size: 22px;">OTP Verification</label>
+  </div>
+  <div class="otp-input-container">
+    <div class="otp-input-row">
+      <input type="text" class="otp-input" name="otp1" [(ngModel)]="otp[0]" maxlength="6"
+        [ngModelOptions]="{ updateOn: 'blur' }" />
+    </div>
+    <div class="otp-verify-row">
+      <button type="submit" class="bold-button" (click)="verifyOtp()">Verify OTP</button>
+      <div class="otp-edit-row">
+        <button type="button" class="bold-button" (click)="showOtpVerification=false">Edit Phone Number</button>
+      </div>
+      <div class="question">
+        <span class="otp-resend-text" type="font-weight: bold" *ngIf="countdown === 0" (click)="resendOTP()">Resend
+          OTP</span>
+        <span *ngIf="countdown > 0">Didn't Receive the OTP?</span>
+      </div>
+      <div class="countdown" *ngIf="countdown > 0">Can retry in {{ countdown }}</div>
+    </div>
+  </div>
+</div>
